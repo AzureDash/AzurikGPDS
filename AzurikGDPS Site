@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05091c">
+<meta name="description" content="AzurikGDPS - The best Russian Geometry Dash Private Server">
+<title>AzurikGDPS V6 | Future Roadmap</title>
+
+<style>
+:root{
+--bg:#05091c;
+--panel:#0b1740;
+--blue:#087cff;
+--cyan:#23e5ff;
+--purple:#9b63ff;
+--text:#f0f7ff;
+--muted:#a8bee5;
+--border:#168cff66;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+margin:0;color:var(--text);
+font-family:Inter,Segoe UI,Arial,sans-serif;
+background:radial-gradient(ellipse at top,#12347b 0,#07122f 40%,#030615 80%);
+overflow-x:hidden
+}
+body:before{
+content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;
+background-image:linear-gradient(#328aff 1px,transparent 1px),
+linear-gradient(90deg,#328aff 1px,transparent 1px);
+background-size:40px 40px
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+header{
+position:sticky;top:0;z-index:20;
+background:#04091ee8;backdrop-filter:blur(14px);
+border-bottom:1px solid #168cff66
+}
+.nav{
+max-width:1300px;margin:auto;padding:14px 20px;
+display:flex;align-items:center;justify-content:space-between;gap:15px
+}
+.logo{
+font-weight:1000;font-size:25px;letter-spacing:-1px;
+text-shadow:0 0 18px #08aaff;white-space:nowrap
+}
+.logo span{color:var(--cyan)}
+nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+nav a,.lang button{
+padding:10px 12px;border-radius:12px;font-weight:750;
+font-size:13px;color:#cfe6ff;border:1px solid transparent
+}
+nav a:hover{background:#0e2b66;border-color:#147dff}
+.lang{display:flex;gap:5px}
+.lang button{
+cursor:pointer;background:#081638;border-color:#174c9b;
+transition:.25s
+}
+.lang button.active{
+background:linear-gradient(135deg,#087cff,#11caff);color:white
+}
+.lang button:active{transform:scale(.9)}
+
+.hero{text-align:center;padding:85px 20px 60px;position:relative;overflow:hidden}
+.hero-icon{
+font-size:68px;filter:drop-shadow(0 0 18px #00bfff);
+animation:float 3s ease-in-out infinite
+}
+h1{
+font-size:clamp(42px,8vw,90px);margin:12px 0;
+background:linear-gradient(#fff,#5be0ff 55%,#1785ff);
+color:transparent;background-clip:text;font-weight:1000;
+letter-spacing:-3px;text-shadow:0 0 35px #007dff44
+}
+.tagline{font-size:clamp(18px,3vw,28px);color:#c8eaff;font-weight:800}
+.buttons,.drive-actions{
+display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px
+}
+.btn{
+display:inline-block;padding:14px 22px;border-radius:14px;font-weight:900;
+background:linear-gradient(135deg,#087cff,#10caff);
+box-shadow:0 0 24px #008cff55;transition:.2s;border:0;cursor:pointer
+}
+.btn.secondary{background:#09183c;border:1px solid #147dff;box-shadow:none}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #00cfff88}
+
+.wrap{max-width:1200px;margin:auto;padding:0 20px 65px}
+.title{text-align:center;font-size:30px;margin:12px 0 25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card{
+background:linear-gradient(145deg,#0b1d4bdd,#06102cdd);
+border:1px solid #087dff88;border-radius:18px;padding:22px;
+box-shadow:inset 0 0 20px #087dff0b,0 10px 30px #0002;
+transition:.25s
+}
+.card .ico{font-size:30px}
+.card h3{margin:12px 0 8px}
+.card p{color:var(--muted);line-height:1.6;margin:0}
+.card:hover{border-color:#27e7ff;box-shadow:0 0 25px #00bfff20;transform:translateY(-3px)}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.role{padding:18px;border-radius:15px;background:#081638;border:1px solid #174b99}
+.role b{display:block;margin-bottom:7px;color:#5ee7ff}
+.role span{color:#d8e7ff}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
+.link{display:block;text-align:center;padding:20px 13px;overflow-wrap:anywhere}
+.link strong{display:block;margin:9px 0}
+.link small{color:var(--muted)}
+.dashboard{margin-top:45px}
+iframe{width:100%;height:620px;border:1px solid #168cff;border-radius:18px;background:white}
+.note{text-align:center;color:var(--muted);font-size:13px;margin-top:10px;line-height:1.6}
+footer{text-align:center;padding:28px;color:#91afd9;border-top:1px solid #147aff44}
+
+#loader{
+position:fixed;inset:0;z-index:1000;background:#030716;
+display:grid;place-items:center;transition:opacity .7s,visibility .7s
+}
+#loader.hide{opacity:0;visibility:hidden}
+.load-inner{text-align:center}
+.load-cube{
+width:62px;height:62px;margin:0 auto 24px;border:5px solid #24dfff;
+border-radius:12px;box-shadow:0 0 25px #00bfff;animation:spinCube 1.15s linear infinite
+}
+.loadbar{height:5px;width:220px;background:#14244c;border-radius:9px;overflow:hidden;margin:18px auto}
+.loadbar i{display:block;height:100%;width:40%;background:linear-gradient(90deg,#087cff,#29efff);animation:load 1.4s ease-in-out infinite}
+@keyframes spinCube{to{transform:rotate(360deg)}}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+
+#particles{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.particle{
+position:absolute;width:5px;height:5px;background:#20dfff;border-radius:2px;
+box-shadow:0 0 12px #00bfff;animation:particleUp linear infinite
+}
+@keyframes particleUp{
+from{transform:translateY(110vh) rotate(0);opacity:0}
+10%{opacity:.8}90%{opacity:.7}
+to{transform:translateY(-15vh) rotate(720deg);opacity:0}
+}
+.orbit-cube{
+position:absolute;width:70px;height:70px;border:5px solid #18cfff;
+border-radius:12px;box-shadow:0 0 25px #008cff;opacity:.5;
+animation:spinCube 8s linear infinite
+}
+.orbit-cube.left{left:8%;top:35%}
+.orbit-cube.right{right:9%;top:22%;animation-duration:11s}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px;margin:24px 0}
+.stat{text-align:center;padding:20px;background:#081638;border:1px solid #168cff88;border-radius:16px}
+.stat strong{font-size:30px;color:#50eaff;display:block}
+.stat span{font-size:13px;color:#a9c3e8}
+.level-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.level{display:flex;align-items:center;gap:13px;padding:15px;background:#081638;border:1px solid #174b99;border-radius:14px}
+.level .thumb{
+width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#0b68ff,#22dfff);
+display:grid;place-items:center;font-size:25px;flex-shrink:0
+}
+.level b{display:block}
+.level small{color:#a8bee5}
+.level .diff{margin-left:auto;color:#5ee7ff;font-size:12px}
+.events{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.event{
+position:relative;overflow:hidden;border-radius:17px;padding:22px;
+background:linear-gradient(140deg,#10275e,#08102b);border:1px solid #168cff88
+}
+.event:after{
+content:"";position:absolute;width:130px;height:130px;border:2px solid #20dfff33;
+border-radius:50%;right:-45px;top:-45px;box-shadow:0 0 35px #008cff22
+}
+.event .date{color:#5ce8ff;font-size:12px;font-weight:900;letter-spacing:1px}
+.event h3{margin:10px 0}
+.event p{color:#a9c3e8;line-height:1.5}
+.api-box{background:#07112b;border:1px solid #1b70d5;border-radius:16px;padding:18px;overflow:auto}
+.api-box code{color:#69eaff;font-family:Consolas,monospace;white-space:pre}
+.dashboard-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.dashlink{
+display:block;padding:17px;border:1px solid #1678d688;background:#081638;
+border-radius:14px;transition:.2s
+}
+.dashlink:hover{transform:translateY(-3px);border-color:#25e5ff;box-shadow:0 0 20px #00bfff22}
+.dashlink b{display:block;margin-bottom:6px;color:#dff7ff}
+.dashlink small{color:#a9c3e8}
+.status-empty{color:#ffca75!important}
+.dash-icon{font-size:22px;margin-right:7px}
+
+/* FUTURE ROADMAP */
+.future-section{position:relative}
+.future-intro{
+max-width:750px;margin:-10px auto 35px;text-align:center;
+color:#a9c3e8;line-height:1.8
+}
+.future-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px
+}
+.future-card{
+position:relative;overflow:hidden;padding:25px;border-radius:20px;
+background:linear-gradient(145deg,#0c1c49ed,#050d25ed);
+border:1px solid #2167bd88;transition:.3s
+}
+.future-card:before{
+content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+background:#087cff12;right:-90px;top:-90px;pointer-events:none
+}
+.future-card:hover{
+transform:translateY(-7px);border-color:#27e7ff;
+box-shadow:0 10px 35px #008cff20
+}
+.future-icon{font-size:38px;margin-bottom:15px;filter:drop-shadow(0 0 10px #008cff55)}
+.future-card h3{font-size:21px;margin:0 0 12px}
+.future-card p{color:#a9c3e8;line-height:1.65;min-height:80px;margin:0}
+.future-status{
+display:inline-flex;align-items:center;gap:7px;margin-top:18px;
+padding:7px 12px;border-radius:30px;font-size:10px;font-weight:1000;
+letter-spacing:1px;background:#8b5cf622;color:#bda2ff;border:1px solid #8b5cf644
+}
+.future-status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.future-status.soon{background:#00cfff15;color:#4eeaff;border-color:#00cfff44}
+.future-status.development{background:#ffb02015;color:#ffc76a;border-color:#ffb02044}
+.roadmap-bottom{
+margin-top:30px;padding:22px;text-align:center;border:1px solid #168cff55;
+border-radius:17px;background:#081638;color:#a9c3e8;line-height:1.7
+}
+.roadmap-bottom b{color:#5ce8ff}
+
+body.lang-switching main{animation:langFade .32s ease}
+@keyframes langFade{0%{opacity:.35;transform:translateY(5px)}100%{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+@media(max-width:900px){
+.nav{justify-content:center;flex-wrap:wrap}
+nav{order:3;width:100%}
+}
+@media(max-width:750px){
+.hero{padding-top:55px}
+iframe{height:520px}
+h1{letter-spacing:-1px}
+.orbit-cube{width:42px;height:42px;border-width:3px}
+.orbit-cube.left{left:3%}.orbit-cube.right{right:3%}
+}
+@media(max-width:500px){
+nav a{padding:8px;font-size:12px}
+.future-card p{min-height:unset}
+.title{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+<div id="loader">
+<div class="load-inner">
+<div class="load-cube"></div>
+<div style="font-weight:1000;font-size:27px;color:#45ddff">AZURIK GDPS</div>
+<div style="color:#9bbbe8;margin-top:8px;letter-spacing:3px">LOADING...</div>
+<div class="loadbar"><i></i></div>
+</div>
+</div>
+<div id="particles"></div>
+
+<header>
+<div class="nav">
+<a class="logo" href="#home">◈ <span>Azurik</span>GDPS</a>
+<nav>
+<a href="#home" data-en="Home" data-ru="Главная">Home</a>
+<a href="#why" data-en="Why us?" data-ru="Почему мы?">Why us?</a>
+<a href="#events" data-en="Events" data-ru="События">Events</a>
+<a href="#drive" data-en="Downloads" data-ru="Загрузки">Downloads</a>
+<a href="#stats" data-en="Stats" data-ru="Статистика">Stats</a>
+<a href="#levels" data-en="Levels" data-ru="Уровни">Levels</a>
+<a href="#future" data-en="Future" data-ru="В будущем">Future</a>
+<a href="#team" data-en="Team" data-ru="Команда">Team</a>
+<a href="#dashboard" data-en="Dashboard" data-ru="Дашборд">Dashboard</a>
+<a href="#directory" data-en="GDPS data" data-ru="Данные GDPS">GDPS data</a>
+<a href="#links" data-en="Links" data-ru="Ссылки">Links</a>
+</nav>
+<div class="lang">
+<button id="enBtn" class="active" onclick="setLang('en')">EN</button>
+<button id="ruBtn" onclick="setLang('ru')">RU</button>
+</div>
+</div>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="orbit-cube left"></div><div class="orbit-cube right"></div>
+<div class="hero-icon">▣</div>
+<h1>AzurikGDPS</h1>
+<div class="tagline" data-en="The best Russian GDPS!" data-ru="Лучший русский GDPS!">The best Russian GDPS!</div>
+<div class="buttons">
+<a class="btn" href="https://azurikgdps.ps.fhgdps.com/" target="_blank" rel="noopener" data-en="🎮 GDPS SWITCHER" data-ru="🎮 GDPS SWITCHER">🎮 GDPS SWITCHER</a>
+<a class="btn secondary" href="https://azurikgdps.ps.fhgdps.com/" target="_blank" rel="noopener" data-en="⬇ DOWNLOAD GDPS" data-ru="⬇ СКАЧАТЬ GDPS">⬇ DOWNLOAD GDPS</a>
+<a class="btn secondary" href="#dashboard" data-en="📊 OPEN DASHBOARD" data-ru="📊 ОТКРЫТЬ DASHBOARD">📊 OPEN DASHBOARD</a>
+</div>
+</section>
+
+<section class="wrap" id="why">
+<h2 class="title" data-en="⭐ Why choose AzurikGDPS?" data-ru="⭐ Почему стоит выбрать AzurikGDPS?">⭐ Why choose AzurikGDPS?</h2>
+<div class="grid">
+<article class="card"><div class="ico">⚡</div><h3 data-en="Made for players" data-ru="Создан для игроков">Made for players</h3><p data-en="A Geometry Dash private server to enjoy the game and explore custom content." data-ru="Приватный сервер Geometry Dash для игры и изучения пользовательского контента.">A Geometry Dash private server to enjoy the game and explore custom content.</p></article>
+<article class="card"><div class="ico">🧩</div><h3 data-en="Create & discover" data-ru="Создавай и открывай">Create & discover</h3><p data-en="Build levels, try community creations, and share your ideas." data-ru="Создавай уровни, пробуй работы сообщества и делись идеями.">Build levels, try community creations, and share your ideas.</p></article>
+<article class="card"><div class="ico">🌐</div><h3 data-en="Community & news" data-ru="Сообщество и новости">Community & news</h3><p data-en="Follow our social channels for videos, news, and project updates." data-ru="Следи за нашими каналами: видео, новости и обновления проекта.">Follow our social channels for videos, news, and project updates.</p></article>
+<article class="card"><div class="ico">💙</div><h3 data-en="Friendly support" data-ru="Поддержка">Friendly support</h3><p data-en="Questions or issues? Contact the team and let us know." data-ru="Есть вопросы или проблемы? Свяжись с командой.">Questions or issues? Contact the team and let us know.</p></article>
+</div>
+</section>
+
+<section class="wrap" id="events">
+<h2 class="title" data-en="🎉 Upcoming events" data-ru="🎉 Предстоящие события">🎉 Upcoming events</h2>
+<div class="events">
+<article class="event"><div class="date" data-en="COMING SOON" data-ru="СКОРО">COMING SOON</div><h3 data-en="AzurikGDPS Event" data-ru="Событие AzurikGDPS">AzurikGDPS Event</h3><p data-en="A community event announcement will appear here. Date and details are not confirmed yet." data-ru="Здесь появится анонс события сообщества. Дата и подробности пока не подтверждены.">A community event announcement will appear here. Date and details are not confirmed yet.</p></article>
+<article class="event"><div class="date">TBA</div><h3 data-en="Level Contest" data-ru="Конкурс уровней">Level Contest</h3><p data-en="Stay tuned for possible level-building challenges and prizes." data-ru="Следи за новостями о возможных конкурсах создания уровней.">Stay tuned for possible level-building challenges and prizes.</p></article>
+<article class="event"><div class="date">TBA</div><h3 data-en="Community Meetup" data-ru="Встреча сообщества">Community Meetup</h3><p data-en="Updates and community activities will be posted in Telegram." data-ru="Новости и активности сообщества будут публиковаться в Telegram.">Updates and community activities will be posted in Telegram.</p></article>
+</div>
+<p class="note" data-en="These are announcement placeholders, not confirmed events." data-ru="Это шаблоны объявлений, а не подтверждённые мероприятия.">These are announcement placeholders, not confirmed events.</p>
+</section>
+
+<section class="wrap" id="drive">
+<h2 class="title" data-en="📦 GDPS Downloads" data-ru="📦 Загрузки GDPS">📦 GDPS Downloads</h2>
+<div class="drive-actions">
+<a class="btn" href="https://drive.google.com/drive/folders/1IQcTi_JRmAw7mmzNLPPAHMszUmrtt0X-?usp=sharing" target="_blank" rel="noopener" data-en="📁 OPEN GOOGLE DRIVE (ZIP + APK)" data-ru="📁 ОТКРЫТЬ GOOGLE DRIVE (ZIP + APK)">📁 OPEN GOOGLE DRIVE (ZIP + APK)</a>
+<a class="btn secondary" href="https://azurikgdps.ps.fhgdps.com/" target="_blank" rel="noopener">🌐 GDPS SWITCHER</a>
+</div>
+<p class="note" data-en="Choose the ZIP or APK file in Drive. The website links to your folder; it does not host the files itself." data-ru="Выбери ZIP или APK в Drive. Сайт ведёт в папку и сам файлы не хранит.">Choose the ZIP or APK file in Drive. The website links to your folder; it does not host the files itself.</p>
+</section>
+
+<section class="wrap" id="stats">
+<h2 class="title" data-en="📈 Server stats" data-ru="📈 Статистика сервера">📈 Server stats</h2>
+<div class="stats">
+<div class="stat"><strong>—</strong><span data-en="Registered players" data-ru="Зарегистрировано игроков">Registered players</span></div>
+<div class="stat"><strong>—</strong><span data-en="Created levels" data-ru="Создано уровней">Created levels</span></div>
+<div class="stat"><strong>—</strong><span data-en="Online now" data-ru="Сейчас онлайн">Online now</span></div>
+<div class="stat"><strong>—</strong><span data-en="Total downloads" data-ru="Всего скачиваний">Total downloads</span></div>
+</div>
+<div class="api-box">
+<b style="color:#5ce8ff">API connection preview</b><br>
+<code>GET /api/stats
+GET /api/levels
+GET /api/events</code>
+<p class="note" data-en="These are proposed endpoints, not active routes yet. The server must implement them and return JSON." data-ru="Это предлагаемые endpoints, пока они не работают. Сервер должен реализовать их и возвращать JSON.">These are proposed endpoints, not active routes yet. The server must implement them and return JSON.</p>
+</div>
+<p class="note" data-en="Live statistics need a server API. These placeholders are intentionally not fake numbers." data-ru="Для реальной статистики нужен API сервера. Здесь стоят заглушки, а не выдуманные числа.">Live statistics need a server API. These placeholders are intentionally not fake numbers.</p>
+</section>
+
+<section class="wrap" id="levels">
+<h2 class="title" data-en="🏆 Featured levels" data-ru="🏆 Популярные уровни">🏆 Featured levels</h2>
+<div class="level-list">
+<div class="level"><div class="thumb">▣</div><div><b data-en="Level list unavailable" data-ru="Список уровней недоступен">Level list unavailable</b><small data-en="Connect GDPS API to show real levels" data-ru="Подключи API GDPS для реальных уровней">Connect GDPS API to show real levels</small></div><span class="diff">API</span></div>
+<div class="level"><div class="thumb">✦</div><div><b data-en="Community picks" data-ru="Выбор сообщества">Community picks</b><small data-en="Dynamic level data can go here" data-ru="Здесь могут отображаться данные уровней">Dynamic level data can go here</small></div><span class="diff">LIVE*</span></div>
+</div>
+<p class="note" data-en="Real level names, IDs, creators, and ratings can be loaded once an endpoint is available." data-ru="Названия, ID, авторов и оценки уровней можно загрузить после получения API-адреса.">Real level names, IDs, creators, and ratings can be loaded once an endpoint is available.</p>
+</section>
+
+<!-- FUTURE ROADMAP -->
+<section class="wrap future-section" id="future">
+<h2 class="title" data-en="🚀 Future Roadmap" data-ru="🚀 В будущем">🚀 Future Roadmap</h2>
+<p class="future-intro"
+data-en="AzurikGDPS is just getting started! Here are the features and content planned for the future. Dates will be announced when confirmed."
+data-ru="AzurikGDPS только начинает развиваться! Вот функции и контент, которые планируются в будущем. Даты появятся после подтверждения.">
+AzurikGDPS is just getting started! Here are the features and content planned for the future. Dates will be announced when confirmed.
+</p>
+
+<div class="future-grid">
+
+<article class="future-card">
+<div class="future-icon">🟢</div>
+<h3 data-en="First Levels" data-ru="Первые уровни">First Levels</h3>
+<p data-en="The first player-created levels will appear on AzurikGDPS. Start building and get ready to publish!"
+data-ru="Первые пользовательские уровни появятся в AzurikGDPS. Создавай уровни и готовься к публикации!">
+The first player-created levels will appear on AzurikGDPS. Start building and get ready to publish!
+</p>
+<span class="future-status soon" data-en="COMING SOON" data-ru="СКОРО">COMING SOON</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">⚔️</div>
+<h3>Gauntlets</h3>
+<p data-en="Complete themed collections of levels. More challenges and new ways to play."
+data-ru="Тематические подборки уровней. Больше испытаний и новых способов играть.">
+Complete themed collections of levels. More challenges and new ways to play.
+</p>
+<span class="future-status" data-en="PLANNED" data-ru="В ПЛАНАХ">PLANNED</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">🗺️</div>
+<h3>Map Packs</h3>
+<p data-en="Classic-style map packs with several levels grouped into one collection."
+data-ru="Мап паки в классическом стиле с несколькими уровнями в одной подборке.">
+Classic-style map packs with several levels grouped into one collection.
+</p>
+<span class="future-status" data-en="PLANNED" data-ru="В ПЛАНАХ">PLANNED</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">⭐</div>
+<h3 data-en="Rating Criteria" data-ru="Критерии рейтов">Rating Criteria</h3>
+<p data-en="A rating system with clear criteria for stars, featured levels, and quality standards."
+data-ru="Система рейтингов с критериями звёзд, Featured и требованиями к качеству уровней.">
+A rating system with clear criteria for stars, featured levels, and quality standards.
+</p>
+<span class="future-status development" data-en="IN DEVELOPMENT" data-ru="В РАЗРАБОТКЕ">IN DEVELOPMENT</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">🏆</div>
+<h3 data-en="Best Levels" data-ru="Лучшие уровни">Best Levels</h3>
+<p data-en="A showcase of the most impressive, creative, and highly rated AzurikGDPS levels."
+data-ru="Подборка самых впечатляющих, креативных и высоко оценённых уровней AzurikGDPS.">
+A showcase of the most impressive, creative, and highly rated AzurikGDPS levels.
+</p>
+<span class="future-status" data-en="PLANNED" data-ru="В ПЛАНАХ">PLANNED</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">📰</div>
+<h3 data-en="News" data-ru="Новости">News</h3>
+<p data-en="A dedicated news section for server updates, announcements, changes, and important information."
+data-ru="Отдельный раздел новостей: обновления сервера, объявления, изменения и важная информация.">
+A dedicated news section for server updates, announcements, changes, and important information.
+</p>
+<span class="future-status" data-en="PLANNED" data-ru="В ПЛАНАХ">PLANNED</span>
+</article>
+
+<article class="future-card">
+<div class="future-icon">🔥</div>
+<h3>Versus Events</h3>
+<p data-en="Special competitions between players or teams. Beat challenges, earn recognition, and compete!"
+data-ru="Особые соревнования между игроками или командами. Проходи испытания и соревнуйся!">
+Special competitions between players or teams. Beat challenges, earn recognition, and compete!
+</p>
+<span class="future-status" data-en="PLANNED" data-ru="В ПЛАНАХ">PLANNED</span>
+</article>
+
+</div>
+
+<div class="roadmap-bottom">
+<b data-en="More features are coming!" data-ru="Впереди ещё больше функций!">More features are coming!</b><br>
+<span data-en="This roadmap may change as AzurikGDPS grows. Follow our official channels for announcements."
+data-ru="Планы могут изменяться по мере развития AzurikGDPS. Следи за официальными каналами, чтобы не пропустить новости.">
+This roadmap may change as AzurikGDPS grows. Follow our official channels for announcements.
+</span>
+</div>
+</section>
+
+<section class="wrap" id="team">
+<h2 class="title" data-en="👑 Our team" data-ru="👑 Наша команда">👑 Our team</h2>
+<div class="roles">
+<div class="role"><b>Owner</b><span>AzureDashYT</span></div>
+<div class="role"><b>Admins</b><span>?</span></div>
+<div class="role"><b>Moderator</b><span>?</span></div>
+<div class="role"><b>Rating Advisor</b><span>?</span></div>
+<div class="role"><b>Leaderboard Moderator</b><span>?</span></div>
+</div>
+<p class="note" data-en="Staff positions will be updated when confirmed." data-ru="Состав команды будет обновлён после подтверждения.">Staff positions will be updated when confirmed.</p>
+</section>
+
+<section class="wrap" id="directory">
+<h2 class="title" data-en="🗂️ GDPS Dashboard directory" data-ru="🗂️ Разделы GDPS Dashboard">🗂️ GDPS Dashboard directory</h2>
+<div class="dashboard-links">
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/stats/accountsList.php" target="_blank" rel="noopener"><b><span class="dash-icon">👥</span><span data-en="Accounts" data-ru="Аккаунты">Accounts</span></b><small data-en="Account list & profile info" data-ru="Список аккаунтов и профили">Account list & profile info</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">🏆</span><span data-en="Levels" data-ru="Уровни">Levels</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">🗺️</span><span data-en="Map Packs" data-ru="Мап-Паки">Map Packs</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">⚔️</span><span data-en="Gauntlets" data-ru="Гаунтлеты">Gauntlets</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">📋</span><span data-en="Lists" data-ru="Списки уровней">Lists</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">🎵</span><span data-en="Songs" data-ru="Песни">Songs</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><b><span class="dash-icon">🔊</span><span data-en="SFX" data-ru="Звуковые эффекты">SFX</span></b><small class="status-empty" data-en="Currently empty" data-ru="Пока пусто">Currently empty</small></a>
+<a class="dashlink" href="https://azurikgdps.ps.fhgdps.com/dashboard/clans/" target="_blank" rel="noopener"><b><span class="dash-icon">🛡️</span><span data-en="Clans" data-ru="Кланы">Clans</span></b><small class="status-empty" data-en="No clans yet" data-ru="Кланов пока нет">No clans yet</small></a>
+</div>
+<p class="note" data-en="Some dashboard sections are empty at the moment; links lead to the GDPS dashboard." data-ru="Некоторые разделы сейчас пусты; ссылки ведут в GDPS Dashboard.">Some dashboard sections are empty at the moment; links lead to the GDPS dashboard.</p>
+</section>
+
+<section class="wrap" id="links">
+<h2 class="title" data-en="🔗 Official links" data-ru="🔗 Официальные ссылки">🔗 Official links</h2>
+<div class="links">
+<a class="card link" href="mailto:aibek9000a@gmail.com"><span class="ico">✉️</span><strong data-en="Support" data-ru="Поддержка">Support</strong><small>aibek9000a@gmail.com</small></a>
+<a class="card link" href="https://www.youtube.com/@AzureDash_S.D" target="_blank" rel="noopener"><span class="ico">▶️</span><strong>YouTube <small data-en="(not GDPS)" data-ru="(не GDPS)">(not GDPS)</small></strong><small>@AzureDash_S.D</small></a>
+<a class="card link" href="https://www.youtube.com/channel/UCiZRDfXlWb3ghVAevhyrm2w" target="_blank" rel="noopener"><span class="ico">🎮</span><strong>YouTube <small data-en="(GDPS)" data-ru="(GDPS)">(GDPS)</small></strong><small>AzurikGDPS</small></a>
+<a class="card link" href="https://azurikgdps.ps.fhgdps.com/dashboard/" target="_blank" rel="noopener"><span class="ico">📊</span><strong>Dashboard</strong><small data-en="Built-in GDPS dashboard" data-ru="Встроенный GDPS Dashboard">Built-in GDPS dashboard</small></a>
+<a class="card link" href="https://t.me/azuregdps3000" target="_blank" rel="noopener"><span class="ico">✈️</span><strong>Telegram</strong><small>@azuregdps3000</small></a>
+</div>
+
+<div class="dashboard" id="dashboard">
+<h2 class="title" data-en="📊 Dashboard — embedded" data-ru="📊 Dashboard — встроенный">📊 Dashboard — embedded</h2>
+<iframe src="https://azurikgdps.ps.fhgdps.com/dashboard/" title="AzurikGDPS Dashboard" loading="lazy"></iframe>
+<p class="note" data-en="If it doesn't load here, open the dashboard directly." data-ru="Если он не загрузится здесь, открой Dashboard напрямую.">If it doesn't load here, open the dashboard directly.</p>
+</div>
+</section>
+</main>
+
+<footer>© <span id="year"></span> AzurikGDPS · <span data-en="Play. Create. Enjoy!" data-ru="Играй. Создавай. Наслаждайся!">Play. Create. Enjoy!</span></footer>
+
+<script>
+function setLang(lang){
+document.body.classList.remove('lang-switching');
+void document.body.offsetWidth;
+document.body.classList.add('lang-switching');
+document.documentElement.lang=lang;
+document.querySelectorAll('[data-en][data-ru]').forEach(e=>{
+e.textContent=e.dataset[lang];
+});
+document.getElementById('enBtn').classList.toggle('active',lang==='en');
+document.getElementById('ruBtn').classList.toggle('active',lang==='ru');
+}
+document.getElementById('year').textContent=new Date().getFullYear();
+
+window.addEventListener('load',()=>{
+setTimeout(()=>document.getElementById('loader').classList.add('hide'),850);
+});
+
+const particleRoot=document.getElementById('particles');
+for(let i=0;i<32;i++){
+const p=document.createElement('i');
+p.className='particle';
+p.style.left=Math.random()*100+'%';
+p.style.animationDuration=(7+Math.random()*12)+'s';
+p.style.animationDelay=(-Math.random()*18)+'s';
+p.style.opacity=.2+Math.random()*.6;
+p.style.width=p.style.height=(2+Math.random()*5)+'px';
+particleRoot.appendChild(p);
+}
+</script>
+</body>
+</html>
